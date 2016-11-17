@@ -4,7 +4,7 @@ general:
   dependency:
    - Catalog [PostStage]
    - Customer [PostStage]
-   - Order [IntegrationTests]
+   - Order [Compile]
    - Zuul [Compile]
 
 acceptance_testing:
