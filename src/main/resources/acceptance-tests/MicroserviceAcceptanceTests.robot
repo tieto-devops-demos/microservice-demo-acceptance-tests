@@ -81,7 +81,7 @@ Open Browser And Navigate to Add Order Page
   \  Run Keyword Unless  ${passed}  Reload Page
   \  RUn Keyword If  ${passed}  Exit For Loop
   Click Link  Add Order
-  Wait Until Page Contains   Order : Add
+  Wait Until Page Contains   Create Order
   Sleep  2s
   Reload Page
 
@@ -145,7 +145,7 @@ I select customer "${name}"
 I order product "${product}"
   wait for navigating to Order Page
   Click Link  Add Order
-  Wait Until Page Contains   Order : Add
+  Wait Until Page Contains   Create Order
   Click Button  addLine
   Input Text  orderLine0.count  1
   Select From List  orderLine0.itemId  ${product}
