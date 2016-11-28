@@ -17,7 +17,7 @@ ${REMOTE_URL}                     ${EMPTY}
 ${MAIN_URL}
 ${ORDER_URL}
 ${CUSTOMER_SERVICE_URL}
-${CATALOG_SERVICE_URL}  http://localhost:9002
+${CATALOG_SERVICE_URL}  http://localhost:9000
 
 *** Test Cases ***
 Order a product from a catalog
@@ -83,18 +83,18 @@ Open Browser And Navigate to Add Order Page
   Click Link  Add Order
   Wait Until Page Contains   Create Order
   Sleep  2s
-  Reload Page
+#  Reload Page
 
 Open Browser And Navigate to Main Page
   [Documentation]
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
   Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
   :FOR  ${INDEX}  IN RANGE  1  10
-  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Order Processing  5s
+  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Microservices Demo  5s
   \  Run Keyword Unless  ${passed}  Reload Page
   \  RUn Keyword If  ${passed}  Exit For Loop
   Sleep  2s
-  Reload Page
+ # Reload Page
 
 Product "${name}" is added to the catalog
   wait for navigating to Catalog List Page  #to make sure that catalog service is up
@@ -143,10 +143,16 @@ I select customer "${name}"
   Select From List  customerId  ${name}
 
 I order product "${product}"
-  wait for navigating to Order Page
-  Click Link  Add Order
-  Wait Until Page Contains   Create Order
-  Click Button  addLine
+  #wait for navigating to Order Page
+  Click Element  xpath=//*[@id="tab-orders"]
+  Sleep  1s
+#  Select Frame   xpath=//*[@id="page-content"]
+  Wait Until Page Contains   id=page-content
+  Select Frame  id=page-content
+  Sleep  1s
+  Wait Until Page Contains   id=addOrder
+#  Current Frame Contains  id=addOrder
+  Click Button  id=addOrder
   Input Text  orderLine0.count  1
   Select From List  orderLine0.itemId  ${product}
 
@@ -173,7 +179,7 @@ product "${catalog_item}" is ordered by "${customer}"
 I have an order "${catalog_item}" for "${customer}"
   wait for navigating to Order Page
   Wait Until Page Contains  Add Order
-  Click Link  xpath=//table/tbody/tr[last()]/td/a
+  Click Element  xpath=//*[@id="tab-orders"]
   Wait Until Page Contains  ${customer}
   Wait Until Page Contains  ${catalog_item}
 
@@ -212,7 +218,7 @@ item "${catalog_item}" should not be in the catalog
 
 I add item "${catalog_item}"
   wait for navigating to Catalog List Page
-  Click Link  Add Item
+  Click Button  Add Item
   Input Text  id=name  ${catalog_item}
 
 I set item price "${price}" to
@@ -223,7 +229,7 @@ I submit the item
   Wait Until Page Contains  Success
 
 I can see my item "${catalog_item}" in the catalog
-  wait for navigating to Catalog List Page
+  #KM wait for navigating to Catalog List Page
   Page Should Contain  ${catalog_item}
 
 I press delete of item "${customer}" in order page
@@ -234,7 +240,7 @@ item "${customer}" is not visible in the customer page
   Wait Until Element Is Not Visible  xpath=//td[contains(text(),'${customer}')]
 
 order by "${customer}" should not exist
-  wait for navigating to Order Page
+  #KM wait for navigating to Order Page
   ${passed}=  Run Keyword And Return Status  Page Should Not Contain  ${customer}
   Run Keyword Unless  ${passed}  I press delete of item "${customer}" in order page
   item "${customer}" is not visible in the customer page
@@ -251,7 +257,7 @@ I press delete of item in customer page
   Wait Until Page Contains  Success
 
 customer "${customer}" should not exist
-  wait for navigating to Customer Page
+  #KM wait for navigating to Customer Page
   @{words}  Split String  ${customer}
   ${first_name}=  Set Variable  @{words}[0]
   ${last_name}=  Set Variable  @{words}[1]
@@ -290,11 +296,12 @@ Get JSON data without id  [Arguments]  ${service}  ${uri}
   [Return]  ${result}
 
 navigate To Catalog List Page
-  ${catalog_listview_xpath}=  Set Variable  //div[contains(text(),'List / add / remove items')]/..//a[contains(text(),'Catalog')]
+#  ${catalog_listview_xpath}=  Set Variable  //div[contains(text(),'List / add / remove items')]/..//a[contains(text(),'Catalog')]
+  ${catalog_listview_xpath}=  Set Variable  //*[@id="tab-products"]
   Go To  ${MAIN_URL}
   Wait Until Element Is Visible  xpath=${catalog_listview_xpath}
   Click Element  xpath=${catalog_listview_xpath}
-  Wait Until Page Contains  Item : View all
+  Wait Until Page Contains  Products
 
 wait for navigating to Catalog List Page
   :FOR  ${INDEX}  IN RANGE  1  10
@@ -302,30 +309,30 @@ wait for navigating to Catalog List Page
     \  Run Keyword Unless  ${passed}  Reload Page
     \  RUn Keyword If  ${passed}  Exit For Loop
     Sleep  1s
-    Reload Page
+#    Reload Page
   Sleep  2s
 
 navigate To Order Page
   Go To  ${MAIN_URL}
-  Wait Until Page Contains Element  xpath=//a[(text()='Order')]
-  Click Link  Order
-  Reload Page
-  Wait Until Page Contains  Order : View all
+  Wait Until Page Contains Element  xpath=//*[@id="tab-orders"]
+  Click Element  xpath=//*[@id="tab-orders"]
+#  Reload Page
+  Wait Until Page Contains  Orders
 
 wait for navigating to Order Page
-  :FOR  ${INDEX}  IN RANGE  1  10
+  :FOR  ${INDEX}  IN RANGE  1  3
     \  ${passed}=  Run Keyword And Return Status  navigate To Order Page
     \  Run Keyword Unless  ${passed}  Reload Page
     \  RUn Keyword If  ${passed}  Exit For Loop
     Sleep  1s
-    Reload Page
+    #Reload Page
 
 navigate To Customer Page
   Go To  ${MAIN_URL}
-  Wait Until Page Contains Element  xpath=//a[(text()='Customer')]
-  Click Link  Customer
-  Reload Page
-  Wait Until Page Contains  Customer : View all
+  Wait Until Page Contains Element  xpath=//*[@id="tab-customers"]
+  Click Element  xpath=//*[@id="tab-customers"]
+#  Reload Page
+  Wait Until Page Contains  Customers
 
 wait for navigating to Customer Page
   :FOR  ${INDEX}  IN RANGE  1  10
@@ -333,7 +340,7 @@ wait for navigating to Customer Page
     \  Run Keyword Unless  ${passed}  Reload Page
     \  RUn Keyword If  ${passed}  Exit For Loop
     Sleep  1s
-    Reload Page
+#    Reload Page
   Sleep  2s
 
 I find deleteable catalog items from JSON  [Arguments]  ${catalog_item_name_searched}  ${json}

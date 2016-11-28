@@ -17,8 +17,8 @@
        <robot.remote_url>False</robot.remote_url>                        <!-- Selenium GRID hub address -->
        <robot.main.url>http://localhost:8080</robot.main.url>              <!-- SUT -->
        <robot.order.url>http://localhost:8080/order/</robot.order.url>              <!-- SUT -->
-       <robot.customer_rest_url>http://localhost:9001</robot.customer_rest_url>
-       <robot.catalog_rest_url>http://localhost:9002</robot.catalog_rest_url>
+       <robot.customer_rest_url>http://localhost:9002</robot.customer_rest_url>
+       <robot.catalog_rest_url>http://localhost:9000</robot.catalog_rest_url>
 	   <robot.desired_capabilities>None</robot.desired_capabilities>
    </properties>
 
