@@ -77,7 +77,7 @@ Open Browser And Navigate to Add Order Page
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
   Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
   :FOR  ${INDEX}  IN RANGE  1  10
-  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Order : View all  5s
+  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Orders  5s
   \  Run Keyword Unless  ${passed}  Reload Page
   \  RUn Keyword If  ${passed}  Exit For Loop
   Click Link  Add Order
@@ -90,7 +90,7 @@ Open Browser And Navigate to Main Page
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
   Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
   :FOR  ${INDEX}  IN RANGE  1  10
-  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Microservices Demo  5s
+  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Products  5s
   \  Run Keyword Unless  ${passed}  Reload Page
   \  RUn Keyword If  ${passed}  Exit For Loop
   Sleep  2s
@@ -158,7 +158,7 @@ I order product "${product}"
 
 I submit the order
   Click Button  submit
-  Wait Until Page Contains  Success
+  Wait Until Page Contains  Back to Orders
 
 I can verify my order
   wait for navigating to Order Page
@@ -202,7 +202,7 @@ I press delete of item "${catalog_item}" in catalog
   wait for navigating to Catalog List Page
   Wait Until Page Contains  ${catalog_item}
   Click Element  xpath=//td[contains(text(),'${catalog_item}')]/..//input[contains(@class,'btn-link')]
-  Wait Until Page Contains  Success
+  Wait Until Page Contains  Back to Product Catalog
 
 item "${catalog_item}" is not visible in the catalog
   Wait Until Element Is Not Visible  xpath=//td[contains(text(),'${catalog_item}')]
@@ -225,8 +225,8 @@ I set item price "${price}" to
   Input Text  id=price  ${price}
 
 I submit the item
-  Click Button  Submit
-  Wait Until Page Contains  Success
+  Click Button  Save
+  Wait Until Page Contains  Back to Product Catalog
 
 I can see my item "${catalog_item}" in the catalog
   #KM wait for navigating to Catalog List Page
@@ -234,7 +234,7 @@ I can see my item "${catalog_item}" in the catalog
 
 I press delete of item "${customer}" in order page
   Click Element  xpath=//td[contains(text(),'${customer}')]/..//input[contains(@class,'btn-link')]
-  Wait Until Page Contains  Success
+  Wait Until Page Contains  Back to Orders
 
 item "${customer}" is not visible in the customer page
   Wait Until Element Is Not Visible  xpath=//td[contains(text(),'${customer}')]
@@ -254,7 +254,7 @@ product "${catalog_item}" should not be in the catalog
 I press delete of item in customer page
   [Arguments]  ${first_name}  ${last_name}
   Click Element  xpath=//td[contains(text(),'${first_name}')]/..//td[contains(text(),'${last_name}')]/..//input[contains(@class,'btn-link')]
-  Wait Until Page Contains  Success
+  Wait Until Page Contains  Back to Customer List
 
 customer "${customer}" should not exist
   #KM wait for navigating to Customer Page
