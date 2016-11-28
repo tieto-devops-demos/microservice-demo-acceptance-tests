@@ -90,7 +90,7 @@ Open Browser And Navigate to Main Page
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
   Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
   :FOR  ${INDEX}  IN RANGE  1  10
-  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  E-commerce Manager  5s
+  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Products  5s
   \  Run Keyword Unless  ${passed}  Reload Page
   \  RUn Keyword If  ${passed}  Exit For Loop
   Sleep  2s
