@@ -307,8 +307,8 @@ wait for navigating to Catalog List Page
 
 navigate To Order Page
   Go To  ${MAIN_URL}
-  Wait Until Page Contains Element  xpath=//a[(text()='Order')]
-  Click Link  Order
+  Wait Until Page Contains Element  xpath=//a[(text()='Orders')]
+  Click Link  Orders
   Reload Page
   Wait Until Page Contains  Orders
 
@@ -322,8 +322,8 @@ wait for navigating to Order Page
 
 navigate To Customer Page
   Go To  ${MAIN_URL}
-  Wait Until Page Contains Element  xpath=//a[(text()='Customer')]
-  Click Link  Customer
+  Wait Until Page Contains Element  xpath=//a[(text()='Customers')]
+  Click Link  Customers
   Reload Page
   Wait Until Page Contains  Customers
 
