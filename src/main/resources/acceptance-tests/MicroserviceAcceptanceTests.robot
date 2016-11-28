@@ -143,7 +143,7 @@ I select customer "${name}"
   Select From List  customerId  ${name}
 
 I order product "${product}"
-  #wait for navigating to Order Page
+  wait for navigating to Order Page
   Click Element  xpath=//*[@id="tab-orders"]
 #  Sleep  1s
 #  Select Frame   xpath=//*[@id="page-content"]
@@ -184,7 +184,7 @@ I have an order "${catalog_item}" for "${customer}"
   Wait Until Page Contains  Add Order
   Click Element  xpath=//*[@id="tab-orders"]
   Wait Until Page Contains  ${customer}
-  Wait Until Page Contains  ${catalog_item}
+#  Wait Until Page Contains  ${catalog_item}
 
 I press delete button for "${customer}" order
   wait for navigating to Order Page
@@ -204,7 +204,8 @@ I Remove The Catalog Through Service API #not working since no delete implementa
 I press delete of item "${catalog_item}" in catalog
   wait for navigating to Catalog List Page
   Wait Until Page Contains  ${catalog_item}
-  Click Element  xpath=//td[contains(text(),'${catalog_item}')]/..//input[contains(@class,'btn-link')]
+#  Click Element  xpath=//td[contains(text(),'${catalog_item}')]/..//input[contains(@class,'btn-link')]
+  Click Element  xpath=//td[contains(text(),'${catalog_item}')]/..//*[@id="deleteItem"]
   Wait Until Page Contains  Back to Product Catalog
 
 item "${catalog_item}" is not visible in the catalog
@@ -232,7 +233,7 @@ I submit the item
   Wait Until Page Contains  Back to Product Catalog
 
 I can see my item "${catalog_item}" in the catalog
-  #KM wait for navigating to Catalog List Page
+  wait for navigating to Catalog List Page
   Page Should Contain  ${catalog_item}
 
 I press delete of item "${customer}" in order page
@@ -243,7 +244,7 @@ item "${customer}" is not visible in the customer page
   Wait Until Element Is Not Visible  xpath=//td[contains(text(),'${customer}')]
 
 order by "${customer}" should not exist
-  #KM wait for navigating to Order Page
+  wait for navigating to Order Page
   ${passed}=  Run Keyword And Return Status  Page Should Not Contain  ${customer}
   Run Keyword Unless  ${passed}  I press delete of item "${customer}" in order page
   item "${customer}" is not visible in the customer page
@@ -260,7 +261,7 @@ I press delete of item in customer page
   Wait Until Page Contains  Back to Customer List
 
 customer "${customer}" should not exist
-  #KM wait for navigating to Customer Page
+  wait for navigating to Customer Page
   @{words}  Split String  ${customer}
   ${first_name}=  Set Variable  @{words}[0]
   ${last_name}=  Set Variable  @{words}[1]
@@ -323,7 +324,7 @@ navigate To Order Page
   Wait Until Page Contains  Orders
 
 wait for navigating to Order Page
-  :FOR  ${INDEX}  IN RANGE  1  3
+  :FOR  ${INDEX}  IN RANGE  1  10
     \  ${passed}=  Run Keyword And Return Status  navigate To Order Page
     \  Run Keyword Unless  ${passed}  Reload Page
     \  RUn Keyword If  ${passed}  Exit For Loop
