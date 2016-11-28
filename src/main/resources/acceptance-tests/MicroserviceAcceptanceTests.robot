@@ -77,7 +77,7 @@ Open Browser And Navigate to Add Order Page
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
   Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
   :FOR  ${INDEX}  IN RANGE  1  10
-  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Order : View all  5s
+  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Orders  5s
   \  Run Keyword Unless  ${passed}  Reload Page
   \  RUn Keyword If  ${passed}  Exit For Loop
   Click Link  Add Order
@@ -152,7 +152,7 @@ I order product "${product}"
 
 I submit the order
   Click Button  submit
-  Wait Until Page Contains  Success
+  Wait Until Page Contains  Back to Orders
 
 I can verify my order
   wait for navigating to Order Page
@@ -196,7 +196,7 @@ I press delete of item "${catalog_item}" in catalog
   wait for navigating to Catalog List Page
   Wait Until Page Contains  ${catalog_item}
   Click Element  xpath=//td[contains(text(),'${catalog_item}')]/..//input[contains(@class,'btn-link')]
-  Wait Until Page Contains  Success
+  Wait Until Page Contains  Back to Product Catalog
 
 item "${catalog_item}" is not visible in the catalog
   Wait Until Element Is Not Visible  xpath=//td[contains(text(),'${catalog_item}')]
@@ -219,8 +219,8 @@ I set item price "${price}" to
   Input Text  id=price  ${price}
 
 I submit the item
-  Click Button  Submit
-  Wait Until Page Contains  Success
+  Click Button  Save
+  Wait Until Page Contains  Back to Product Catalog
 
 I can see my item "${catalog_item}" in the catalog
   wait for navigating to Catalog List Page
@@ -228,7 +228,7 @@ I can see my item "${catalog_item}" in the catalog
 
 I press delete of item "${customer}" in order page
   Click Element  xpath=//td[contains(text(),'${customer}')]/..//input[contains(@class,'btn-link')]
-  Wait Until Page Contains  Success
+  Wait Until Page Contains  Back to Orders
 
 item "${customer}" is not visible in the customer page
   Wait Until Element Is Not Visible  xpath=//td[contains(text(),'${customer}')]
@@ -248,7 +248,7 @@ product "${catalog_item}" should not be in the catalog
 I press delete of item in customer page
   [Arguments]  ${first_name}  ${last_name}
   Click Element  xpath=//td[contains(text(),'${first_name}')]/..//td[contains(text(),'${last_name}')]/..//input[contains(@class,'btn-link')]
-  Wait Until Page Contains  Success
+  Wait Until Page Contains  Back to Customer List
 
 customer "${customer}" should not exist
   wait for navigating to Customer Page
@@ -294,7 +294,7 @@ navigate To Catalog List Page
   Go To  ${MAIN_URL}
   Wait Until Element Is Visible  xpath=${catalog_listview_xpath}
   Click Element  xpath=${catalog_listview_xpath}
-  Wait Until Page Contains  Item : View all
+  Wait Until Page Contains  Products
 
 wait for navigating to Catalog List Page
   :FOR  ${INDEX}  IN RANGE  1  10
@@ -310,7 +310,7 @@ navigate To Order Page
   Wait Until Page Contains Element  xpath=//a[(text()='Order')]
   Click Link  Order
   Reload Page
-  Wait Until Page Contains  Order : View all
+  Wait Until Page Contains  Orders
 
 wait for navigating to Order Page
   :FOR  ${INDEX}  IN RANGE  1  10
@@ -325,7 +325,7 @@ navigate To Customer Page
   Wait Until Page Contains Element  xpath=//a[(text()='Customer')]
   Click Link  Customer
   Reload Page
-  Wait Until Page Contains  Customer : View all
+  Wait Until Page Contains  Customers
 
 wait for navigating to Customer Page
   :FOR  ${INDEX}  IN RANGE  1  10
