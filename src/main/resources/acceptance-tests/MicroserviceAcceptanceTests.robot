@@ -145,14 +145,15 @@ I select customer "${name}"
 I order product "${product}"
   #wait for navigating to Order Page
   Click Element  xpath=//*[@id="tab-orders"]
-  Sleep  1s
+#  Sleep  1s
 #  Select Frame   xpath=//*[@id="page-content"]
 #  Wait Until Page Contains   id=page-content
 #  Select Frame  id=page-content
   Sleep  1s
-  Wait Until Page Contains   id=addOrder
+#  Wait Until Page Contains   xpath=//*[@id="addOrder"]
 #  Current Frame Contains  id=addOrder
-  Click Button  id=addOrder
+  Click Element  xpath=//*[@id="addOrder"]
+  Click Element  xpath=//*[@id="addItem"]
   Input Text  orderLine0.count  1
   Select From List  orderLine0.itemId  ${product}
 
@@ -163,9 +164,11 @@ I submit the order
 I can verify my order
   wait for navigating to Order Page
   Click Link  xpath=//table/tbody/tr[last()]/td/a
-  ${name}=  Get Text  xpath=//div[text()='Customer']/following-sibling::div
+#  ${name}=  Get Text  xpath=//div[text()='Customer']/following-sibling::div
+  ${name}=  Get Text  xpath=/html/body/div[2]/div/div[1]/div[2]
   Should Be Equal  ${NAME}  ${name}
-  ${price}=  Get Text  xpath=//div[text()='Total price']/following-sibling::div
+#  ${price}=  Get Text  xpath=//div[text()='Total price']/following-sibling::div
+  ${price}=  Get Text  xpath=/html/body/div[2]/div/div[3]/div[2]/span
   Should Be Equal  ${CATALOG_PRICE}  ${price}
 
 product "${catalog_item}" is ordered by "${customer}"
