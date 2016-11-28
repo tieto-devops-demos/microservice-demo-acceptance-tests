@@ -147,8 +147,8 @@ I order product "${product}"
   Click Element  xpath=//*[@id="tab-orders"]
   Sleep  1s
 #  Select Frame   xpath=//*[@id="page-content"]
-  Wait Until Page Contains   id=page-content
-  Select Frame  id=page-content
+#  Wait Until Page Contains   id=page-content
+#  Select Frame  id=page-content
   Sleep  1s
   Wait Until Page Contains   id=addOrder
 #  Current Frame Contains  id=addOrder
