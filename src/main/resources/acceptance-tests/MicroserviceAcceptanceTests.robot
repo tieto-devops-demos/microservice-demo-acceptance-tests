@@ -190,7 +190,10 @@ I press delete button for "${customer}" order
   wait for navigating to Order Page
   Wait Until Page Contains  Add Order
   Page Should contain  ${customer}
-  Click Element  xpath=//table/tbody/tr[last()]//td[contains(text(),'${customer}')]/..//input[contains(@class,'btn-link')]
+#  Click Element  xpath=//table/tbody/tr[last()]//a[contains(text(),'${customer}')]//..//..//*[@id="deleteCustomer"]
+  Click Element  xpath=//td[contains(text(),'Jari Kurri')]//..//*[@id="deleteOrder"]
+#  xpath=//td[contains(text(),'Jari Kurri')]//..//*[@id="deleteOrder"]
+
 
 I can verify my order for "${customer}" is deleted
   wait for navigating to Order Page
@@ -205,7 +208,7 @@ I press delete of item "${catalog_item}" in catalog
   wait for navigating to Catalog List Page
   Wait Until Page Contains  ${catalog_item}
 #  Click Element  xpath=//td[contains(text(),'${catalog_item}')]/..//input[contains(@class,'btn-link')]
-  Click Element  xpath=//td[contains(text(),'${catalog_item}')]/..//*[@id="deleteItem"]
+  Click Element  xpath=//a[contains(text(), '${catalog_item}')]/..//..//*[@id="deleteItem"]
   Wait Until Page Contains  Back to Product Catalog
 
 item "${catalog_item}" is not visible in the catalog
@@ -222,7 +225,7 @@ item "${catalog_item}" should not be in the catalog
 
 I add item "${catalog_item}"
   wait for navigating to Catalog List Page
-  Click Button  Add Item
+  Click Element  xpath=//*[@id="addItem"]
   Input Text  id=name  ${catalog_item}
 
 I set item price "${price}" to
@@ -237,7 +240,9 @@ I can see my item "${catalog_item}" in the catalog
   Page Should Contain  ${catalog_item}
 
 I press delete of item "${customer}" in order page
-  Click Element  xpath=//td[contains(text(),'${customer}')]/..//input[contains(@class,'btn-link')]
+  #Click Element  xpath=//td[contains(text(),'${customer}')]/..//input[contains(@class,'btn-link')]
+  #Click Element  xpath=//table/tbody/tr[last()]//a[contains(text(),'${customer}')]//..//..//*[@id="deleteCustomer"]
+  Click Element  xpath=//td[contains(text(),'${customer}')]//..//*[@id="deleteOrder"]
   Wait Until Page Contains  Back to Orders
 
 item "${customer}" is not visible in the customer page
@@ -257,7 +262,9 @@ product "${catalog_item}" should not be in the catalog
 
 I press delete of item in customer page
   [Arguments]  ${first_name}  ${last_name}
-  Click Element  xpath=//td[contains(text(),'${first_name}')]/..//td[contains(text(),'${last_name}')]/..//input[contains(@class,'btn-link')]
+  Click Element  xpath=//a[contains(text(),'${first_name}')]/..//..//a[contains(text(),'${last_name}')]//..//..//*[@id="deleteCustomer"]
+#  //a[contains(text(),'${first_name}')]/..//..//a[contains(text(),'${last_name}')]//..//..//*[@id="deleteCustomer"]
+#//table/tbody/tr[last()]//a[contains(text(),'${customer}')]//..//..//*[@id="deleteCustomer"]
   Wait Until Page Contains  Back to Customer List
 
 customer "${customer}" should not exist
