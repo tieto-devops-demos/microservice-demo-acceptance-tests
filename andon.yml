@@ -31,9 +31,9 @@ acceptance_testing:
     test_services:
       owasp_zap: true
       selenium_grid: false
-      browser_stack: true
+      browser_stack:
         key: qcGwaiyQpFFibmBoyEp3
-        local-identifier: Test123
+        local_identifier: Test123
       service_virtualization: false
       robot_framework: true
       cucumber: false
