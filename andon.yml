@@ -30,7 +30,10 @@ acceptance_testing:
       - maven
     test_services:
       owasp_zap: true
-      selenium_grid: true
+      selenium_grid: false
+      browser_stack: true
+        key: qcGwaiyQpFFibmBoyEp3
+        local-identifier: Test123
       service_virtualization: false
       robot_framework: true
       cucumber: false
@@ -39,7 +42,7 @@ acceptance_testing:
         jobs:
           - job: Chrome
             tasks:
-              - task: mvn clean -Probot,zap -Drobot.http_proxy_port=8000 -Drobot.http_proxy_host=zap -Drobot.browser=chrome -Drobot.remote_url=http://hub:4444/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 clean install
+              - task: mvn -Probot -Drobot.remote_url=http://ilpopaju1:qcGwaiyQpFFibmBoyEp3@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,browserstack.localIdentifier=Test123" clean install
                 build_path: .
                 run_if_conditions: passed
               - task: true
@@ -49,15 +52,15 @@ acceptance_testing:
                 build_path: .
                 run_if_conditions: failed
           
-  selenium:
-#    version: "latest"
-    browsers:
-    - name: chrome
-      amount: 1
-      version: "latest"
-    - name: firefox
-      amount: 1
-      version: "latest"
+#  selenium:
+##    version: "latest"
+#    browsers:
+#    - name: chrome
+#      amount: 1
+#      version: "latest"
+#    - name: firefox
+#      amount: 1
+#      version: "latest"
   
 #  cron_timer: 0 0 22 ? * MON-FRI
   
