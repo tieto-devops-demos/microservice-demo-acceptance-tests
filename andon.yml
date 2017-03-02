@@ -18,46 +18,39 @@ general:
 acceptance_testing:
   compose_file_path: /src/test/resources
   compose_file_name: docker-compose.yml
-  
-#  service_virtualization:
-#    mari_file_path: src/test/resources/service-virtualization/VirtualServices
-#    mari_file_names:
-#      - catalog.mari
-  
+
   tests:
     go_cd_agent_props:
       - java:8
       - maven
     test_services:
       owasp_zap: true
-      selenium_grid: false
+      selenium_grid: true
       browser_stack:
         key: qcGwaiyQpFFibmBoyEp3
       service_virtualization: false
       robot_framework: true
       cucumber: false
     stages:
-      - stage: AcceptanceTesting
+      - stage: AcceptanceTestingBrowserStack
         jobs:
-          - job: Chrome
+          - job: BrowserStack_IE
             tasks:
-              - task: mvn -Probot -Drobot.remote_url=http://ilpopaju1:qcGwaiyQpFFibmBoyEp3@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,browserstack.localIdentifier:Test123" clean install
-              - task: true
-                build_path: .
-                run_if_conditions: any
-              - task: echo 'hello world'
-                build_path: .
-                run_if_conditions: failed
-          
-#  selenium:
-##    version: "latest"
-#    browsers:
-#    - name: chrome
-#      amount: 1
-#      version: "latest"
-#    - name: firefox
-#      amount: 1
-#      version: "latest"
+              - task: mvn -Probot -Drobot.remote_url=http://ilpopaju1:qcGwaiyQpFFibmBoyEp3@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True" clean install
+      - stage: AcceptanceTestingSeleniumGrid
+        jobs:
+          - job: SeleniumGrid_Chrome
+            tasks:
+              - task: mvn clean -Probot,zap -Drobot.http_proxy_port=8000 -Drobot.http_proxy_host=zap -Drobot.browser=chrome -Drobot.remote_url=http://hub:4444/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 clean install
+
+  selenium:
+    version: "2.53.1"
+    browsers:
+    - name: chrome
+      amount: 1
+    - name: firefox
+      amount: 1
+
   
 #  cron_timer: 0 0 22 ? * MON-FRI
   
