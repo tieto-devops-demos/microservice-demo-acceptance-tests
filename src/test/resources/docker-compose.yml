@@ -28,3 +28,9 @@ services:
      - eureka
     expose:
       - "8080"
+#  turbine:
+#    build: turbineserver
+#    links:
+#     - eureka
+#    ports:
+#      - "8989:8989"

@@ -12,6 +12,8 @@ services:
      - eureka
     ports:
       - "9001:8080"
+    expose:
+      - "8080"
   catalog:
     build: ../../../../../microservice-demo/microservice-demo-catalog
     image: catalog
@@ -19,6 +21,8 @@ services:
      - eureka
     ports:
      - "9002:8080"
+    expose:
+      - "8080"
   order:
     build: ../../../../../microservice-demo/microservice-demo-order
     image: order
@@ -26,6 +30,8 @@ services:
      - eureka
     ports:
      - "9003:8080"
+    expose:
+      - "8080"
   zuul:
     build: ../../../../../microservice-demo/microservice-demo-zuul-server
     image: zuul
@@ -33,6 +39,13 @@ services:
      - eureka
     ports:
       - "8080:8080"
+    expose:
+      - "8080"
+  browserstack:
+    image: andon/browserstack
+    entrypoint: /usr/local/bin/BrowserStackLocal --key qcGwaiyQpFFibmBoyEp3 --enable-logging-for-api --verbose 3
+    links:
+      - zuul
 #  turbine:
 #    build: turbineserver
 #    links:

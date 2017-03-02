@@ -33,7 +33,6 @@ acceptance_testing:
       selenium_grid: false
       browser_stack:
         key: qcGwaiyQpFFibmBoyEp3
-        local_identifier: Test123
       service_virtualization: false
       robot_framework: true
       cucumber: false
@@ -42,9 +41,7 @@ acceptance_testing:
         jobs:
           - job: Chrome
             tasks:
-              - task: mvn -Probot -Drobot.remote_url=http://ilpopaju1:qcGwaiyQpFFibmBoyEp3@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,browserstack.localIdentifier=Test123" clean install
-                build_path: .
-                run_if_conditions: passed
+              - task: mvn -Probot -Drobot.remote_url=http://ilpopaju1:qcGwaiyQpFFibmBoyEp3@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,browserstack.localIdentifier:Test123" clean install
               - task: true
                 build_path: .
                 run_if_conditions: any

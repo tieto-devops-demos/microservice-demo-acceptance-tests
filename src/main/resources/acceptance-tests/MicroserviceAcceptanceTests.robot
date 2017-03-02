@@ -17,15 +17,13 @@ ${REMOTE_URL}                     ${EMPTY}
 ${MAIN_URL}
 ${ORDER_URL}
 ${CUSTOMER_SERVICE_URL}
-${CATALOG_SERVICE_URL}  http://localhost:9000
+${CATALOG_SERVICE_URL}  http://localhost:9002
 
 *** Test Cases ***
 Order a product from a catalog
   [Tags]
   Given order by "Teemu Selanne" should not exist
-   #And product "Torspo" should not be in the catalog
    And product "Torspo" should not be in the catalog through REST API
-   #And customer "Teemu Selanne" should not exist
    And customer "Teemu Selanne" should not exist through REST API
    And product "Torspo" is added to the catalog
    And customer "Teemu Selanne" is added
@@ -77,24 +75,24 @@ Open Browser And Navigate to Add Order Page
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
   Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
   :FOR  ${INDEX}  IN RANGE  1  10
-  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Orders  5s
+  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Order : View all  5s
   \  Run Keyword Unless  ${passed}  Reload Page
   \  RUn Keyword If  ${passed}  Exit For Loop
   Click Link  Add Order
-  Wait Until Page Contains   Create Order
+  Wait Until Page Contains   Order : Add
   Sleep  2s
-#  Reload Page
+  Reload Page
 
 Open Browser And Navigate to Main Page
   [Documentation]
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
   Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
   :FOR  ${INDEX}  IN RANGE  1  10
-  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Products  5s
+  \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Order Processing  5s
   \  Run Keyword Unless  ${passed}  Reload Page
   \  RUn Keyword If  ${passed}  Exit For Loop
   Sleep  2s
- # Reload Page
+  Reload Page
 
 Product "${name}" is added to the catalog
   wait for navigating to Catalog List Page  #to make sure that catalog service is up
@@ -144,31 +142,22 @@ I select customer "${name}"
 
 I order product "${product}"
   wait for navigating to Order Page
-  Click Element  xpath=//*[@id="tab-orders"]
-#  Sleep  1s
-#  Select Frame   xpath=//*[@id="page-content"]
-#  Wait Until Page Contains   id=page-content
-#  Select Frame  id=page-content
-  Sleep  1s
-#  Wait Until Page Contains   xpath=//*[@id="addOrder"]
-#  Current Frame Contains  id=addOrder
-  Click Element  xpath=//*[@id="addOrder"]
-  Click Element  xpath=//*[@id="addItem"]
+  Click Link  Add Order
+  Wait Until Page Contains   Order : Add
+  Click Button  addLine
   Input Text  orderLine0.count  1
   Select From List  orderLine0.itemId  ${product}
 
 I submit the order
   Click Button  submit
-  Wait Until Page Contains  Back to Orders
+  Wait Until Page Contains  Success
 
 I can verify my order
   wait for navigating to Order Page
   Click Link  xpath=//table/tbody/tr[last()]/td/a
-#  ${name}=  Get Text  xpath=//div[text()='Customer']/following-sibling::div
-  ${name}=  Get Text  xpath=/html/body/div[2]/div/div[1]/div[2]
+  ${name}=  Get Text  xpath=//div[text()='Customer']/following-sibling::div
   Should Be Equal  ${NAME}  ${name}
-#  ${price}=  Get Text  xpath=//div[text()='Total price']/following-sibling::div
-  ${price}=  Get Text  xpath=/html/body/div[2]/div/div[3]/div[2]/span
+  ${price}=  Get Text  xpath=//div[text()='Total price']/following-sibling::div
   Should Be Equal  ${CATALOG_PRICE}  ${price}
 
 product "${catalog_item}" is ordered by "${customer}"
@@ -182,18 +171,15 @@ product "${catalog_item}" is ordered by "${customer}"
 I have an order "${catalog_item}" for "${customer}"
   wait for navigating to Order Page
   Wait Until Page Contains  Add Order
-  Click Element  xpath=//*[@id="tab-orders"]
+  Click Link  xpath=//table/tbody/tr[last()]/td/a
   Wait Until Page Contains  ${customer}
-#  Wait Until Page Contains  ${catalog_item}
+  Wait Until Page Contains  ${catalog_item}
 
 I press delete button for "${customer}" order
   wait for navigating to Order Page
   Wait Until Page Contains  Add Order
   Page Should contain  ${customer}
-#  Click Element  xpath=//table/tbody/tr[last()]//a[contains(text(),'${customer}')]//..//..//*[@id="deleteCustomer"]
-  Click Element  xpath=//td[contains(text(),'Jari Kurri')]//..//*[@id="deleteOrder"]
-#  xpath=//td[contains(text(),'Jari Kurri')]//..//*[@id="deleteOrder"]
-
+  Click Element  xpath=//table/tbody/tr[last()]//td[contains(text(),'${customer}')]/..//input[contains(@class,'btn-link')]
 
 I can verify my order for "${customer}" is deleted
   wait for navigating to Order Page
@@ -207,9 +193,8 @@ I Remove The Catalog Through Service API #not working since no delete implementa
 I press delete of item "${catalog_item}" in catalog
   wait for navigating to Catalog List Page
   Wait Until Page Contains  ${catalog_item}
-#  Click Element  xpath=//td[contains(text(),'${catalog_item}')]/..//input[contains(@class,'btn-link')]
-  Click Element  xpath=//a[contains(text(), '${catalog_item}')]/..//..//*[@id="deleteItem"]
-  Wait Until Page Contains  Back to Product Catalog
+  Click Element  xpath=//td[contains(text(),'${catalog_item}')]/..//input[contains(@class,'btn-link')]
+  Wait Until Page Contains  Success
 
 item "${catalog_item}" is not visible in the catalog
   Wait Until Element Is Not Visible  xpath=//td[contains(text(),'${catalog_item}')]
@@ -225,25 +210,23 @@ item "${catalog_item}" should not be in the catalog
 
 I add item "${catalog_item}"
   wait for navigating to Catalog List Page
-  Click Element  xpath=//*[@id="addItem"]
+  Click Link  Add Item
   Input Text  id=name  ${catalog_item}
 
 I set item price "${price}" to
   Input Text  id=price  ${price}
 
 I submit the item
-  Click Button  Save
-  Wait Until Page Contains  Back to Product Catalog
+  Click Button  Submit
+  Wait Until Page Contains  Success
 
 I can see my item "${catalog_item}" in the catalog
   wait for navigating to Catalog List Page
   Page Should Contain  ${catalog_item}
 
 I press delete of item "${customer}" in order page
-  #Click Element  xpath=//td[contains(text(),'${customer}')]/..//input[contains(@class,'btn-link')]
-  #Click Element  xpath=//table/tbody/tr[last()]//a[contains(text(),'${customer}')]//..//..//*[@id="deleteCustomer"]
-  Click Element  xpath=//td[contains(text(),'${customer}')]//..//*[@id="deleteOrder"]
-  Wait Until Page Contains  Back to Orders
+  Click Element  xpath=//td[contains(text(),'${customer}')]/..//input[contains(@class,'btn-link')]
+  Wait Until Page Contains  Success
 
 item "${customer}" is not visible in the customer page
   Wait Until Element Is Not Visible  xpath=//td[contains(text(),'${customer}')]
@@ -262,10 +245,8 @@ product "${catalog_item}" should not be in the catalog
 
 I press delete of item in customer page
   [Arguments]  ${first_name}  ${last_name}
-  Click Element  xpath=//a[contains(text(),'${first_name}')]/..//..//a[contains(text(),'${last_name}')]//..//..//*[@id="deleteCustomer"]
-#  //a[contains(text(),'${first_name}')]/..//..//a[contains(text(),'${last_name}')]//..//..//*[@id="deleteCustomer"]
-#//table/tbody/tr[last()]//a[contains(text(),'${customer}')]//..//..//*[@id="deleteCustomer"]
-  Wait Until Page Contains  Back to Customer List
+  Click Element  xpath=//td[contains(text(),'${first_name}')]/..//td[contains(text(),'${last_name}')]/..//input[contains(@class,'btn-link')]
+  Wait Until Page Contains  Success
 
 customer "${customer}" should not exist
   wait for navigating to Customer Page
@@ -307,12 +288,11 @@ Get JSON data without id  [Arguments]  ${service}  ${uri}
   [Return]  ${result}
 
 navigate To Catalog List Page
-#  ${catalog_listview_xpath}=  Set Variable  //div[contains(text(),'List / add / remove items')]/..//a[contains(text(),'Catalog')]
-  ${catalog_listview_xpath}=  Set Variable  //*[@id="tab-products"]
+  ${catalog_listview_xpath}=  Set Variable  //div[contains(text(),'List / add / remove items')]/..//a[contains(text(),'Catalog')]
   Go To  ${MAIN_URL}
   Wait Until Element Is Visible  xpath=${catalog_listview_xpath}
   Click Element  xpath=${catalog_listview_xpath}
-  Wait Until Page Contains  Products
+  Wait Until Page Contains  Item : View all
 
 wait for navigating to Catalog List Page
   :FOR  ${INDEX}  IN RANGE  1  10
@@ -320,15 +300,15 @@ wait for navigating to Catalog List Page
     \  Run Keyword Unless  ${passed}  Reload Page
     \  RUn Keyword If  ${passed}  Exit For Loop
     Sleep  1s
-#    Reload Page
+    Reload Page
   Sleep  2s
 
 navigate To Order Page
   Go To  ${MAIN_URL}
-  Wait Until Page Contains Element  xpath=//*[@id="tab-orders"]
-  Click Element  xpath=//*[@id="tab-orders"]
-#  Reload Page
-  Wait Until Page Contains  Orders
+  Wait Until Page Contains Element  xpath=//a[(text()='Order')]
+  Click Link  Order
+  Reload Page
+  Wait Until Page Contains  Order : View all
 
 wait for navigating to Order Page
   :FOR  ${INDEX}  IN RANGE  1  10
@@ -336,14 +316,14 @@ wait for navigating to Order Page
     \  Run Keyword Unless  ${passed}  Reload Page
     \  RUn Keyword If  ${passed}  Exit For Loop
     Sleep  1s
-    #Reload Page
+    Reload Page
 
 navigate To Customer Page
   Go To  ${MAIN_URL}
-  Wait Until Page Contains Element  xpath=//*[@id="tab-customers"]
-  Click Element  xpath=//*[@id="tab-customers"]
-#  Reload Page
-  Wait Until Page Contains  Customers
+  Wait Until Page Contains Element  xpath=//a[(text()='Customer')]
+  Click Link  Customer
+  Reload Page
+  Wait Until Page Contains  Customer : View all
 
 wait for navigating to Customer Page
   :FOR  ${INDEX}  IN RANGE  1  10
@@ -351,7 +331,7 @@ wait for navigating to Customer Page
     \  Run Keyword Unless  ${passed}  Reload Page
     \  RUn Keyword If  ${passed}  Exit For Loop
     Sleep  1s
-#    Reload Page
+    Reload Page
   Sleep  2s
 
 I find deleteable catalog items from JSON  [Arguments]  ${catalog_item_name_searched}  ${json}
