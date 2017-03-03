@@ -10,7 +10,7 @@ Suite Setup  Initialize Session
 Suite Teardown  Delete All Sessions
 Test Teardown  Close Browser
 
-Test Timeout  2min
+#Test Timeout  2min
 
 *** Variables ***
 # Execution specific
@@ -458,4 +458,3 @@ Street is "${street}"
 
 City is "${city}"
   Set Test Variable  ${CITY}  ${city}
-
