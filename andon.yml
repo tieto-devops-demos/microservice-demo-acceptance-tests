@@ -4,8 +4,9 @@ general:
   dependency:
    - Catalog [PostStage]
    - Customer [PostStage]
-   - Order [IntegrationTests]
-   - Zuul [Compile]
+   - Order [PostStage]
+   - Zuul [PostStage]
+   - AndroidApp [BuildAPK]
   
 #pre_stage:
 #  go_cd_agent_props:
