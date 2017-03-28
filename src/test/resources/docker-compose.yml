@@ -26,7 +26,7 @@ services:
     links:
      - eureka
   zuul:
-    image: zuul:latest
+    image: eekamak/zuul:latest
 #    image: zuul:$GO_DEPENDENCY_LABEL_ZUUL_MASTER
     links:
      - eureka
