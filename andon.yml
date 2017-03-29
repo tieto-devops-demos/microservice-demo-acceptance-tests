@@ -73,5 +73,5 @@ post_stage:
     - sudo docker push eekamak/customer:latest
     - sudo docker tag order:latest eekamak/order:latest
     - sudo docker push eekamak/order:latest
-    - sudo docker tag zuul:latest eekamak/zuul:latest
-    - sudo docker push eekamak/zuul:latest
+#    - sudo docker tag zuul:latest eekamak/zuul:latest
+#    - sudo docker push eekamak/zuul:latest
