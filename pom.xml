@@ -13,7 +13,7 @@
 
 <properties>
        <robot.browser>chrome</robot.browser>                           <!-- Local default browser -->
-       <robot.tag></robot.tag>
+       <robot.tag>Delete</robot.tag>
        <robot.remote_url>False</robot.remote_url>                        <!-- Selenium GRID hub address -->
        <robot.main.url>http://localhost:8080</robot.main.url>              <!-- SUT -->
        <robot.order.url>http://localhost:8080/order/</robot.order.url>              <!-- SUT -->

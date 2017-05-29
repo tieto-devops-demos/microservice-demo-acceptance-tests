@@ -35,6 +35,7 @@ Order a product from a catalog
   Then I can verify my order
 
 Delete an existing order
+  [Tags]  Delete
   Given order by "Jari Kurri" should not exist
     And product "Koho" should not be in the catalog
     And customer "Jari Kurri" should not exist
@@ -241,7 +242,7 @@ I can see my item "${catalog_item}" in the catalog
 
 I press delete of item "${customer}" in order page
   Click Element  xpath=//td[contains(text(),'${customer}')]//..//*[@id="deleteOrder"]
-  Wait Until Page Contains  SUccess
+  Wait Until Page Contains  Success
   Click Link  backToOrders
 
 item "${customer}" is not visible in the customer page
