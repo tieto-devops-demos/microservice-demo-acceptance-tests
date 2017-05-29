@@ -77,7 +77,7 @@ Initialize Session
 Open Browser And Navigate to Add Order Page
   [Documentation]
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
-  Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES},name:${SUITE NAME}.${TEST NAME}  None
+  Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
   :FOR  ${INDEX}  IN RANGE  1  10
   \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Orders  5s
   \  Run Keyword Unless  ${passed}  Reload Page
@@ -90,7 +90,7 @@ Open Browser And Navigate to Add Order Page
 Open Browser And Navigate to Main Page
   [Documentation]
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
-  Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES},name:${SUITE NAME}.${TEST NAME}  None
+  Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
   :FOR  ${INDEX}  IN RANGE  1  10
   \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Products  5s
   \  Run Keyword Unless  ${passed}  Reload Page
