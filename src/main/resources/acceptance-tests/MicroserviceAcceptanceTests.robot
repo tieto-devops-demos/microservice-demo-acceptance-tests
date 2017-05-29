@@ -40,7 +40,7 @@ Delete an existing order
     And customer "Jari Kurri" should not exist
     And product "Koho" is ordered by "Jari Kurri"
   When I have an order "Koho" for "Jari Kurri"
-    And I press delete button for "Jari Kurri" order
+    And I press delete of item "Jari Kurri" in order page
   Then I can verify my order for "Jari Kurri" is deleted
 
 Remove item from catalog
@@ -240,10 +240,9 @@ I can see my item "${catalog_item}" in the catalog
   Page Should Contain  ${catalog_item}
 
 I press delete of item "${customer}" in order page
-  #Click Element  xpath=//td[contains(text(),'${customer}')]/..//input[contains(@class,'btn-link')]
-  #Click Element  xpath=//table/tbody/tr[last()]//a[contains(text(),'${customer}')]//..//..//*[@id="deleteCustomer"]
   Click Element  xpath=//td[contains(text(),'${customer}')]//..//*[@id="deleteOrder"]
-  Wait Until Page Contains  Back to Orders
+  Wait Until Page Contains  SUccess
+  Click Link  backToOrders
 
 item "${customer}" is not visible in the customer page
   Wait Until Element Is Not Visible  xpath=//td[contains(text(),'${customer}')]
