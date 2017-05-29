@@ -77,7 +77,7 @@ Initialize Session
 Open Browser And Navigate to Add Order Page
   [Documentation]
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
-  Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
+  Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES},name:${SUITE NAME}.${TEST NAME}  None
   :FOR  ${INDEX}  IN RANGE  1  10
   \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Orders  5s
   \  Run Keyword Unless  ${passed}  Reload Page
@@ -90,7 +90,7 @@ Open Browser And Navigate to Add Order Page
 Open Browser And Navigate to Main Page
   [Documentation]
   ${remote}=  Get Variable Value  ${REMOTE_URL}  None
-  Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES}  None
+  Open Browser  ${MAIN_URL}  ${BROWSER}  None  ${REMOTE_URL}  ${DESIRED_CAPABILITIES},name:${SUITE NAME}.${TEST NAME}  None
   :FOR  ${INDEX}  IN RANGE  1  10
   \  ${passed}=  Run Keyword And Return Status  Wait Until Page Contains  Products  5s
   \  Run Keyword Unless  ${passed}  Reload Page
@@ -188,13 +188,13 @@ I have an order "${catalog_item}" for "${customer}"
   Wait Until Page Contains  ${customer}
 #  Wait Until Page Contains  ${catalog_item}
 
-I press delete button for "${customer}" order
-  wait for navigating to Order Page
-  Wait Until Page Contains  Add Order
-  Page Should contain  ${customer}
-#  Click Element  xpath=//table/tbody/tr[last()]//a[contains(text(),'${customer}')]//..//..//*[@id="deleteCustomer"]
-  Click Element  xpath=//td[contains(text(),'Jari Kurri')]//..//*[@id="deleteOrder"]
-#  xpath=//td[contains(text(),'Jari Kurri')]//..//*[@id="deleteOrder"]
+#I press delete button for "${customer}" order
+#  wait for navigating to Order Page
+#  Wait Until Page Contains  Add Order
+#  Page Should contain  ${customer}
+##  Click Element  xpath=//table/tbody/tr[last()]//a[contains(text(),'${customer}')]//..//..//*[@id="deleteCustomer"]
+#  Click Element  xpath=//td[contains(text(),'Jari Kurri')]//..//*[@id="deleteOrder"]
+##  xpath=//td[contains(text(),'Jari Kurri')]//..//*[@id="deleteOrder"]
 
 
 I can verify my order for "${customer}" is deleted
