@@ -21,7 +21,7 @@ ${CATALOG_SERVICE_URL}  http://localhost:9000
 
 *** Test Cases ***
 Order a product from a catalog
-  [Tags]
+  [Tags]  Order product
   Given order by "Teemu Selanne" should not exist
    #And product "Torspo" should not be in the catalog
    And product "Torspo" should not be in the catalog through REST API
@@ -35,7 +35,7 @@ Order a product from a catalog
   Then I can verify my order
 
 Delete an existing order
-  [Tags]  Delete
+  [Tags]  Delete order
   Given order by "Jari Kurri" should not exist
     And product "Koho" should not be in the catalog
     And customer "Jari Kurri" should not exist
@@ -45,13 +45,14 @@ Delete an existing order
   Then I can verify my order for "Jari Kurri" is deleted
 
 Remove item from catalog
+  [Tags]  Remove catalog
   Given product "Montreal" should not be in the catalog
     And product "Montreal" is added to the catalog
   When I press delete of item "Montreal" in catalog
   Then item "Montreal" is not visible in the catalog
 
 Add item to catalog
-  [Tags]
+  [Tags]  Add catalog
   Given item "Bauer" should not be in the catalog
   When I add item "Bauer"
     And I set item price "89" to
