@@ -72,6 +72,7 @@
 		              <extraPathDirectory>${project.basedir}/src/test/resources/libraries</extraPathDirectory>
 		            </extraPathDirectories>
 		            <includes_cli>${robot.tag}</includes_cli>
+								<xunitFile>${project.build.directory}/robotframework-report</<xunitFile>
 		           <variableFiles>
 		           <!--    <variableFile>${project.basedir}/src/main/resources/environment_variables.py</variableFile> -->
 		           </variableFiles>
