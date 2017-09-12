@@ -54,7 +54,7 @@ pipelines:
                    command: bash
                    arguments:
                     - "-c"
-                    - echo "key $BROWSERSTACK_KEY variable $BROWSERSTACK_VARIABLES"
+                    - echo "key $BROWSERSTACK_KEY variable $BROWSERSTACK_VARIABLES muuttuja $MUUTTUJA1"
                - exec: # indicates type of task
                    run_if: passed
                    working_directory: .
