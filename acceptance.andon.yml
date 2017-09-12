@@ -36,8 +36,9 @@ pipelines:
                   - MUUTTUJA1 
                   - MUUTTUJA2
                   - TEMP
+                  - BROWSERSTACK_KEY
                 browserstack:
-                  BROWSERSTACK_KEY: ${MUUTTUJA1}                  
+#                  BROWSERSTACK_KEY: ${MUUTTUJA1}                  
                   BROWSERSTACK_VARIABLES: "--key ${BROWSERSTACK_KEY} --local-identifier BrowserStack_IE --verbose 3"
                 deploy_env:
                   docker_compose:
