@@ -1,0 +1,115 @@
+# acceptancetesting.andon.yml
+pipelines:
+  AcceptanceTesting:
+#    environment_variables:
+#      SONARUSER: admin
+#      SONARPASSWORD: admin
+#    secure_variables:
+#      BROWSERSTACK_KEY: <encrypted>
+    group: eCommerce
+    materials:
+      acceptancetesting:  # this is the name of material
+        # says about type of material and url at once
+        git: https://github.com/tieto-devops-demos/microservice-demo-acceptance-tests.git
+        auto_update: true
+      zuul_master:
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: Zuul
+        stage: build
+      catalog_master:
+        pipeline: Catalog
+        stage: post
+      customer_master:
+        pipeline: Customer
+        stage: post
+      order_master:
+        pipeline: Order
+        stage: post
+    stages:
+      - test: # name of stage
+          jobs:
+            BrowserStack_IE: # name of the job
+              andon: # andon job configuration
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
+                ui_def_variables:
+                  - MUUTTUJA1 
+                  - MUUTTUJA2
+                  - TEMP
+                browserstack:
+#                  BROWSERSTACK_KEY: ${MUUTTUJA1}                  
+                  BROWSERSTACK_KEY: HEA8tMFKN6bSUyhBriQD
+                  BROWSERSTACK_VARIABLES: "--key ${BROWSERSTACK_KEY} --local-identifier BrowserStack_IE --verbose 3"
+                deploy_env:
+                  docker_compose:
+                    - "src/test/resources/docker-compose.yml"                
+              artifacts:
+               - test:
+                   source: target/*
+              tabs:
+                robot_report: robotframework-reports/report.html
+              tasks:
+               - exec: # indicates type of task
+                   run_if: passed
+                   working_directory: .
+                   command: bash
+                   arguments:
+                    - "-c"
+                    - echo "key $BROWSERSTACK_KEY variable $BROWSERSTACK_VARIABLES"
+               - exec: # indicates type of task
+                   run_if: passed
+                   working_directory: .
+                   command: bash
+                   arguments:
+                    - "-c"
+                    - mvn -Probot -Drobot.remote_url=http://kallemkel1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_IE" clean install
+
+               - exec: # indicates type of task
+                   run_if: passed
+                   working_directory: .
+                   command: bash
+                   arguments:
+                    - "-c" 
+                    - echo "bar foo"
+#                    - "mvn -Probot -Drobot.remote_url=http://ilpopaju1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browserName:android,platform:ANDROID,device:Samsung Galaxy S5,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_Android" clean install"
+            SeleniumGrid_Chrome: # name of the job
+              andon: # andon job configuration
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
+                selenium_grid:
+                  version: "2.53.1"
+                  browsers:
+                    - chrome
+                    - firefox
+                owasp_zap: true
+                deploy_env:
+                  docker_compose:
+                    - "src/test/resources/docker-compose.yml"                
+              artifacts:
+               - test:
+                   source: target/*
+              tabs:
+                robot_report: robotframework-reports/report.html
+                zap_report: zap-reports/zapReport.html
+              tasks:
+               - exec: # indicates type of task
+                   run_if: passed
+                   working_directory: .
+                   command: bash
+                   arguments:
+                    - "-c" 
+                    - "mvn clean -Probot,zap -Drobot.http_proxy_port=8000 -Drobot.http_proxy_host=zap -Drobot.browser=chrome -Drobot.remote_url=http://hub:4444/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 clean install"
+      - post: # name of stage
+          jobs:
+            docker: # name of the job
+              andon: # andon job configuration
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
+              tasks:
+               - exec: # indicates type of task
+                   command: bash
+                   arguments:
+                    - "-c" 
+                    - "docker tag catalog:$GO_DEPENDENCY_LABEL_CATALOG_MASTER eekamak/catalog:latest"
+                    - "docker tag customer:$GO_DEPENDENCY_LABEL_CUSTOMER_MASTER eekamak/customer:latest"
+                    - "docker tag order:$GO_DEPENDENCY_LABEL_ORDER_MASTER eekamak/order:latest"
+                    - "docker tag zuul:$GO_DEPENDENCY_LABEL_ZUUL_MASTER eekamak/zuul:latest"
+                    
