@@ -33,11 +33,9 @@ pipelines:
               andon: # andon job configuration
                 image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
                 ui_def_variables:
-                  - MUUTTUJA1 
-                  - MUUTTUJA2
-                  - TEMP
+                  - BROWSERSTACK_KEY 
                 browserstack:
-                  BROWSERSTACK_KEY: ${MUUTTUJA1}                  
+#                  BROWSERSTACK_KEY: ${MUUTTUJA1}                  
                   BROWSERSTACK_VARIABLES: "--key ${BROWSERSTACK_KEY} --local-identifier BrowserStack_IE --verbose 3"
                 deploy_env:
                   docker_compose:
