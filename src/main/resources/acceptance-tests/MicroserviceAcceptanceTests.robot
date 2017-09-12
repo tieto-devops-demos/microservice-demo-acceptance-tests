@@ -44,13 +44,6 @@ Delete an existing order
     And I press delete of item "Jari Kurri" in order page
   Then I can verify my order for "Jari Kurri" is deleted
 
-Remove item from catalog
-  [Tags]  Remove catalog
-  Given product "Montreal" should not be in the catalog
-    And product "Montreal" is added to the catalog
-  When I press delete of item "Montreal" in catalog
-  Then item "Montreal" is not visible in the catalog
-
 Add item to catalog
   [Tags]  Add catalog
   Given item "Bauer" should not be in the catalog
@@ -58,6 +51,13 @@ Add item to catalog
     And I set item price "89" to
     And I submit the item
   Then I can see my item "Bauer" in the catalog
+
+Remove item from catalog
+  [Tags]  Remove catalog
+  Given product "Montreal" should not be in the catalog
+    And product "Montreal" is added to the catalog
+  When I press delete of item "Montreal" in catalog
+  Then item "Montreal" is not visible in the catalog
 
 *** Keywords ***
 Get JSON Template  [Arguments]  ${form}
