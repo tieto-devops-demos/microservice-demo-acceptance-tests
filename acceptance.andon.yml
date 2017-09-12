@@ -1,7 +1,8 @@
 # acceptancetesting.andon.yml
 pipelines:
   AcceptanceTesting:
-#    environment_variables:
+    environment_variables:
+      BROWSERSTACK_VARIABLES: "--key ${BROWSERSTACK_KEY} --local-identifier BrowserStack_IE --verbose 3"
 #      SONARUSER: admin
 #      SONARPASSWORD: admin
     secure_variables:
@@ -36,7 +37,7 @@ pipelines:
 #                  - BROWSERSTACK_KEY 
                 browserstack:
 #                  BROWSERSTACK_KEY: ${MUUTTUJA1}                  
-                  BROWSERSTACK_VARIABLES: "--key ${BROWSERSTACK_KEY} --local-identifier BrowserStack_IE --verbose 3"
+#                  BROWSERSTACK_VARIABLES: "--key ${BROWSERSTACK_KEY} --local-identifier BrowserStack_IE --verbose 3"
                 deploy_env:
                   docker_compose:
                     - "src/test/resources/docker-compose.yml"                
