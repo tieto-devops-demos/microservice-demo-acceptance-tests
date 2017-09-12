@@ -50,10 +50,14 @@ pipelines:
                - exec: # indicates type of task
                    run_if: passed
                    working_directory: .
-                   command: bash
+                   command: docker-compose
                    arguments:
-                    - "-c"
-                    - echo "key $BROWSERSTACK_KEY variable $BROWSERSTACK_VARIABLES muuttuja $MUUTTUJA1"
+                    - -p
+                    - ${HOSTNAME}
+                    - -f
+                    - /etc/andon/composefiles/docker-compose-browserstack.yml
+                    - up
+                    - -d
                - exec: # indicates type of task
                    run_if: passed
                    working_directory: .
