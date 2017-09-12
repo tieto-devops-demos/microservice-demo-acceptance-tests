@@ -3,10 +3,11 @@ pipelines:
   AcceptanceTesting:
     environment_variables:
       BROWSERSTACK_VARIABLES: "--key ${BROWSERSTACK_KEY} --local-identifier BrowserStack_IE --verbose 3"
+      BROWSERSTACK_KEY: HEA8tMFKN6bSUyhBriQD
 #      SONARUSER: admin
 #      SONARPASSWORD: admin
-    secure_variables:
-      BROWSERSTACK_KEY: ERa+hOQWCQNvEwgnK+zQmOUYLjoDHTb8
+#    secure_variables:
+#      BROWSERSTACK_KEY: ERa+hOQWCQNvEwgnK+zQmOUYLjoDHTb8
     group: eCommerce
     materials:
       acceptancetesting:  # this is the name of material
