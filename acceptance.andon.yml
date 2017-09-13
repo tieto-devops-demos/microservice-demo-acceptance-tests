@@ -1,6 +1,6 @@
 # acceptancetesting.andon.yml
 pipelines:
-  AcceptanceTesting:
+  AcceptanceTesting: 
     environment_variables:
 #      BROWSERSTACK_VARIABLES: "--key ${BROWSERSTACK_KEY} --local-identifier BrowserStack_IE --verbose 3"
 #      BROWSERSTACK_KEY: HEA8tMFKN6bSUyhBriQD
