@@ -48,6 +48,13 @@ pipelines:
               tabs:
                 robot_report: robotframework-reports/report.html
               tasks:
+              - exec: # indicates type of task
+                   run_if: passed
+                   working_directory: .
+                   command: bash
+                   arguments:
+                    - "-c"
+                    - "echo $ANDON_BROWSERSTACK"
                - exec: # indicates type of task
                    run_if: passed
                    working_directory: .
