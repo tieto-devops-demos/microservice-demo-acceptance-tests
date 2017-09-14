@@ -31,7 +31,8 @@ pipelines:
           jobs:
             BrowserStack_IE: # name of the job
               secure_variables:
-                BROWSERSTACK_KEY: 7o3A8QHXmJI8lsoZSgiuZOnZhOMnBaL/
+#                BROWSERSTACK_KEY: 7o3A8QHXmJI8lsoZSgiuZOnZhOMnBaL/ #ilpopaju1
+                BROWSERSTACK_KEY: ERa+hOQWCQNvEwgnK+zQmOUYLjoDHTb8  #kallemke1
               andon: # andon job configuration
                 image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
                 ui_def_variables:
@@ -52,10 +53,11 @@ pipelines:
                    command: bash
                    arguments:
                     - "-c"
-                    - mvn -Probot -Drobot.remote_url=http://ilpopaju1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_IE" clean install
+                    - mvn -Probot -Drobot.remote_url=http://kallemke1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_IE" clean install
             BrowserStack_Android: # name of the job
               secure_variables:
-                BROWSERSTACK_KEY: 7o3A8QHXmJI8lsoZSgiuZOnZhOMnBaL/
+#                BROWSERSTACK_KEY: 7o3A8QHXmJI8lsoZSgiuZOnZhOMnBaL/ #ilpopaju1
+                BROWSERSTACK_KEY: ERa+hOQWCQNvEwgnK+zQmOUYLjoDHTb8  #kallemke1
               andon: # andon job configuration
                 image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
                 ui_def_variables:
@@ -76,7 +78,7 @@ pipelines:
                    command: bash
                    arguments:
                     - "-c" 
-                    - "mvn -Probot -Drobot.remote_url=http://ilpopaju1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities=\"browserName:android,platform:ANDROID,device:Samsung Galaxy S5,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_Android\" clean install"
+                    - "mvn -Probot -Drobot.remote_url=http://kallemke1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities=\"browserName:android,platform:ANDROID,device:Samsung Galaxy S5,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_Android\" clean install"
             SeleniumGrid_Chrome: # name of the job
               andon: # andon job configuration
                 image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
