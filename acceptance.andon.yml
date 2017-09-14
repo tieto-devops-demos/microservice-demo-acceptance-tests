@@ -1,4 +1,4 @@
-# acceptancetesting.andon.yml
+# acceptance.andon.yml
 pipelines:
   AcceptanceTesting:
 #    environment_variables:
@@ -52,14 +52,24 @@ pipelines:
                    command: bash
                    arguments:
                     - "-c"
-                    - echo $ANDON_BROWSERSTACK
-               - exec: # indicates type of task
-                   run_if: passed
-                   working_directory: .
-                   command: bash
-                   arguments:
-                    - "-c"
                     - mvn -Probot -Drobot.remote_url=http://kallemkel1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_IE" clean install
+            BrowserStack_Android: # name of the job
+              secure_variables:
+                BROWSERSTACK_KEY: ERa+hOQWCQNvEwgnK+zQmOUYLjoDHTb8
+              andon: # andon job configuration
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
+                ui_def_variables:
+                  - BROWSERSTACK_KEY 
+                browserstack: true
+                deploy_env:
+                  docker_compose:
+                    - "src/test/resources/docker-compose.yml"                
+              artifacts:
+               - test:
+                   source: target/*
+              tabs:
+                robot_report: robotframework-reports/report.html
+              tasks:
                - exec: # indicates type of task
                    run_if: passed
                    working_directory: .
