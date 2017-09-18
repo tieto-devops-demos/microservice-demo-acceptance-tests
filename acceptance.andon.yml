@@ -34,7 +34,7 @@ pipelines:
 #                BROWSERSTACK_KEY: 7o3A8QHXmJI8lsoZSgiuZOnZhOMnBaL/ #ilpopaju1
                 BROWSERSTACK_KEY: u6OJaYsV8breFHgv6LkGjCNaGSxNQ+ce  #kallemke1
               andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.10.0" # elastic agent image
                 ui_def_variables:
                   - BROWSERSTACK_KEY 
                 browserstack: true
@@ -59,7 +59,7 @@ pipelines:
 #                BROWSERSTACK_KEY: 7o3A8QHXmJI8lsoZSgiuZOnZhOMnBaL/ #ilpopaju1
                 BROWSERSTACK_KEY: u6OJaYsV8breFHgv6LkGjCNaGSxNQ+ce  #kallemke1
               andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.10.0" # elastic agent image
                 ui_def_variables:
                   - BROWSERSTACK_KEY 
                 browserstack: true
@@ -84,7 +84,7 @@ pipelines:
           jobs:    
             SeleniumGrid_Chrome: # name of the job
               andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.10.0" # elastic agent image
                 selenium_grid:
                   version: "2.53.1"
                   browsers:
@@ -113,7 +113,7 @@ pipelines:
           jobs:
             docker: # name of the job
               andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.10.0" # elastic agent image
               tasks:
                - exec: # indicates type of task
                    command: bash
