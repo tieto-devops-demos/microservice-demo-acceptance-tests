@@ -32,7 +32,7 @@ pipelines:
             BrowserStack_IE: # name of the job
               secure_variables:
 #                BROWSERSTACK_KEY: 7o3A8QHXmJI8lsoZSgiuZOnZhOMnBaL/ #ilpopaju1
-                BROWSERSTACK_KEY: ERa+hOQWCQNvEwgnK+zQmOUYLjoDHTb8  #kallemke1
+                BROWSERSTACK_KEY: u6OJaYsV8breFHgv6LkGjCNaGSxNQ+ce  #kallemke1
               andon: # andon job configuration
                 image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:17.09" # elastic agent image
                 ui_def_variables:
