@@ -25,7 +25,7 @@ pipelines:
         stage: post
       order_master:
         pipeline: Order
-        stage: post
+        stage: build
     stages:
       - BrowserstackIEandAndroid: # name of stage
           jobs:
