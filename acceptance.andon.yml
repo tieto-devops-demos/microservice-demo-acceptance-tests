@@ -1,6 +1,6 @@
 # acceptance.andon.yml
 pipelines:
-  AcceptanceTesting:
+  AcceptanceTesting: 
 #    environment_variables:
 #      SONARUSER: admin
 #      SONARPASSWORD: admin
