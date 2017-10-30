@@ -47,7 +47,7 @@ services:
      - "27017:27017"
     expose: 
      - "27017"
-   browserstack:
+#   browserstack:
 #    image: andon/browserstack
 #    entrypoint: /usr/local/bin/BrowserStackLocal --key qcGwaiyQpFFibmBoyEp3 --enable-logging-for-api --verbose 3
 #    links:
