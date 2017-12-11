@@ -31,7 +31,7 @@ pipelines:
           jobs:
             BrowserStack_IE: # name of the job
               andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.11.0" # elastic agent image
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.12.0" # elastic agent image
                 ui_def_variables:
                   - BROWSERSTACK_KEY 
                 browserstack: true
@@ -53,7 +53,7 @@ pipelines:
                     - mvn -Probot -Drobot.remote_url=http://kallemkel1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_IE" clean install
             BrowserStack_Android: # name of the job
               andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.11.0" # elastic agent image
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.12.0" # elastic agent image
                 ui_def_variables:
                   - BROWSERSTACK_KEY 
                 browserstack: true
@@ -78,7 +78,7 @@ pipelines:
           jobs:    
             SeleniumGrid_Chrome: # name of the job
               andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.11.0" # elastic agent image
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.12.0" # elastic agent image
                 selenium_grid:
                   version: "2.53.1"
                   browsers:
@@ -107,7 +107,7 @@ pipelines:
           jobs:
             docker: # name of the job
               andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.11.0" # elastic agent image
+                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v17.12.0" # elastic agent image
               tasks:
                - exec: # indicates type of task
                    command: bash
