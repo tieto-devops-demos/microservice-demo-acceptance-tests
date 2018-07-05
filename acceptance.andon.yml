@@ -27,53 +27,53 @@ pipelines:
         pipeline: Order
         stage: post
     stages:
-      - BrowserstackIEandAndroid: # name of stage
-          jobs:
-            BrowserStack_IE: # name of the job
-              andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v18.2.0" # elastic agent image
-                ui_def_variables:
-                  - BROWSERSTACK_KEY 
-                browserstack: true
-                deploy_env:
-                  docker_compose:
-                    - "src/test/resources/docker-compose.yml"                
-              artifacts:
-               - test:
-                   source: target/*
-              tabs:
-                robot_report: robotframework-reports/report.html
-              tasks:
-               - exec: # indicates type of task
-                   run_if: passed
-                   working_directory: .
-                   command: bash
-                   arguments:
-                    - "-c"
-                    - mvn -Probot -Drobot.remote_url=http://kallemkel1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_IE" clean install
-            BrowserStack_Android: # name of the job
-              andon: # andon job configuration
-                image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v18.2.0" # elastic agent image
-                ui_def_variables:
-                  - BROWSERSTACK_KEY 
-                browserstack: true
-                deploy_env:
-                  docker_compose:
-                    - "src/test/resources/docker-compose.yml"                
-              artifacts:
-               - test:
-                   source: target/*
-              tabs:
-                robot_report: robotframework-reports/report.html
-              tasks:
-               - exec: # indicates type of task
-                   run_if: passed
-                   working_directory: .
-                   command: bash
-                   arguments:
-                    - "-c"
+      #- BrowserstackIEandAndroid: # name of stage
+      #    jobs:
+      #      BrowserStack_IE: # name of the job
+      #        andon: # andon job configuration
+      #          image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v18.2.0" # elastic agent image
+      #          ui_def_variables:
+      #            - BROWSERSTACK_KEY 
+      #          browserstack: true
+      #          deploy_env:
+      #            docker_compose:
+      #              - "src/test/resources/docker-compose.yml"                
+      #        artifacts:
+      #         - test:
+      #             source: target/*
+      #        tabs:
+      #          robot_report: robotframework-reports/report.html
+      #        tasks:
+      #         - exec: # indicates type of task
+      #             run_if: passed
+      #             working_directory: .
+      #             command: bash
+      #             arguments:
+      #              - "-c"
+      #              - mvn -Probot -Drobot.remote_url=http://kallemkel1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities="browser:IE,browser_version:11.0,os:Windows,os_version:7,resolution:1024x768,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_IE" clean install
+      #      BrowserStack_Android: # name of the job
+      #        andon: # andon job configuration
+      #          image: "andon.artifactorypro.shared.pub.tds.tieto.com/andon-gocd-agent-java8-maven3:v18.2.0" # elastic agent image
+      #          ui_def_variables:
+      #            - BROWSERSTACK_KEY 
+      #         browserstack: true
+      #          deploy_env:
+      #            docker_compose:
+      #              - "src/test/resources/docker-compose.yml"                
+      #        artifacts:
+      #         - test:
+      #             source: target/*
+      #        tabs:
+      #          robot_report: robotframework-reports/report.html
+      #        tasks:
+      #         - exec: # indicates type of task
+      #             run_if: passed
+      #             working_directory: .
+      #             command: bash
+      #             arguments:
+      #              - "-c"
 #                    - echo bar
-                    - "mvn -Probot -Drobot.remote_url=http://kallemkel1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities=\"browserName:android,platform:ANDROID,device:Samsung Galaxy S5,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_Android\" clean install"
+      #              - "mvn -Probot -Drobot.remote_url=http://kallemkel1:$BROWSERSTACK_KEY@hub.browserstack.com:80/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 -Drobot.desired_capabilities=\"browserName:android,platform:ANDROID,device:Samsung Galaxy S5,browserstack.local:True,project:microservice_demo,build:$GO_PIPELINE_COUNTER,browserstack.localIdentifier:BrowserStack_Android\" clean install"
       - ChromeSecurity: # name of stage
           jobs:    
             SeleniumGrid_Chrome: # name of the job
